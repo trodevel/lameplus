@@ -1,7 +1,6 @@
 /*
 
 Very thin C++ wrapper for LAME library.
-Enables easy PCM to MP3 conversion and vice versa.
 
 Copyright (C) 2015 Sergey Kolevatov
 
@@ -20,7 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-// $Revision: 1589 $ $Date:: 2015-03-18 #$ $Author: serge $
+// $Revision: 1630 $ $Date:: 2015-03-24 #$ $Author: serge $
 
 #include "lameplus.h"       // self
 
@@ -56,6 +55,11 @@ int LamePlus::set_mode( MPEG_mode_e mode )
     return lame_set_mode( lame_, mode );
 }
 
+int LamePlus::set_decode_only( int p )
+{
+    return lame_set_decode_only( lame_, p );
+}
+
 int LamePlus::set_VBR( vbr_mode_e mode )
 {
     return lame_set_VBR( lame_, mode );
@@ -88,6 +92,35 @@ int LamePlus::encode_buffer_interleaved(
         int                 mp3buf_size )
 {
     return lame_encode_buffer_interleaved( lame_, pcm, num_samples, mp3buf, mp3buf_size );
+}
+
+Hip::Hip()
+{
+    hip_    = hip_decode_init();
+}
+
+Hip::~Hip()
+{
+    hip_decode_exit( hip_ );
+}
+
+int Hip::decode1(
+        unsigned char*  mp3buf
+        , size_t          len
+        , short           pcm_l[]
+        , short           pcm_r[] )
+{
+    return hip_decode1( hip_, mp3buf, len, pcm_l, pcm_r );
+}
+
+int Hip::decode1_headers(
+        unsigned char*  mp3buf
+        , size_t          len
+        , short           pcm_l[]
+        , short           pcm_r[]
+        , MP3Data       & mp3data )
+{
+    return hip_decode1_headers( hip_, mp3buf, len, pcm_l, pcm_r, & mp3data.mp3data_ );
 }
 
 NAMESPACE_LAMEPLUS_END

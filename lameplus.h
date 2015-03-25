@@ -1,7 +1,6 @@
 /*
 
 Very thin C++ wrapper for LAME library.
-Enables easy PCM to MP3 conversion and vice versa.
 
 Copyright (C) 2015 Sergey Kolevatov
 
@@ -20,7 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-// $Revision: 1589 $ $Date:: 2015-03-18 #$ $Author: serge $
+// $Revision: 1630 $ $Date:: 2015-03-24 #$ $Author: serge $
 
 #ifndef LIB_LAMEPLUS_H
 #define LIB_LAMEPLUS_H
@@ -42,6 +41,8 @@ public:
 
     int set_num_channels( int channels );
     int set_mode( MPEG_mode_e mode );
+
+    int set_decode_only( int );
 
     int set_VBR( vbr_mode_e mode );
     int init_params();
@@ -65,6 +66,40 @@ public:
                                                   stream                        */
 private:
     lame_t  lame_;
+};
+
+class MP3Data
+{
+    friend class Hip;
+
+public:
+    MP3Data();
+
+private:
+    mp3data_struct mp3data_;
+};
+
+class Hip
+{
+public:
+    Hip();
+    ~Hip();
+
+    int decode1(
+            unsigned char*  mp3buf
+            , size_t          len
+            , short           pcm_l[]
+            , short           pcm_r[] );
+
+    int decode1_headers(
+            unsigned char*  mp3buf
+            , size_t          len
+            , short           pcm_l[]
+            , short           pcm_r[]
+            , MP3Data       & mp3data );
+
+private:
+    hip_t   hip_;
 };
 
 NAMESPACE_LAMEPLUS_END

@@ -65,7 +65,7 @@ EXE=
 
 #vpath %.cpp .
 
-SRCC = lameplus.cpp codec.cpp
+SRCC = lameplus.cpp
 OBJS = $(patsubst %.cpp,$(OBJDIR)/%.o,$(SRCC))
 
 LIB_NAMES = 

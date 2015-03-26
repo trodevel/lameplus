@@ -19,7 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-// $Revision: 1630 $ $Date:: 2015-03-24 #$ $Author: serge $
+// $Revision: 1634 $ $Date:: 2015-03-25 #$ $Author: serge $
 
 #ifndef LIB_LAMEPLUS_H
 #define LIB_LAMEPLUS_H
@@ -74,6 +74,11 @@ class MP3Data
 
 public:
     MP3Data();
+
+    bool is_header_parsed() const;
+    int get_stereo() const;
+    int get_samplerate() const;
+    int get_bitrate() const;
 
 private:
     mp3data_struct mp3data_;

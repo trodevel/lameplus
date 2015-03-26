@@ -19,9 +19,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-// $Revision: 1630 $ $Date:: 2015-03-24 #$ $Author: serge $
+// $Revision: 1634 $ $Date:: 2015-03-25 #$ $Author: serge $
 
 #include "lameplus.h"       // self
+
+#include <cstring>          // memset
 
 NAMESPACE_LAMEPLUS_START
 
@@ -93,6 +95,32 @@ int LamePlus::encode_buffer_interleaved(
 {
     return lame_encode_buffer_interleaved( lame_, pcm, num_samples, mp3buf, mp3buf_size );
 }
+
+MP3Data::MP3Data()
+{
+    std::memset( &mp3data_, 0, sizeof( mp3data_ ) );
+}
+
+bool MP3Data::is_header_parsed() const
+{
+    return mp3data_.header_parsed == 1;
+}
+
+int MP3Data::get_stereo() const
+{
+    return mp3data_.stereo;
+}
+
+int MP3Data::get_samplerate() const
+{
+    return mp3data_.samplerate;
+}
+
+int MP3Data::get_bitrate() const
+{
+    return mp3data_.bitrate;
+}
+
 
 Hip::Hip()
 {

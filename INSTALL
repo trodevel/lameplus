@@ -1,4 +1,4 @@
 
 * required libraries
 
-sudo apt-get install lame
+sudo apt-get install lame libmp3lame-dev
